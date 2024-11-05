@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: Your GymBuddy
+  profiles:
+    active: ${profileActive:dev}
+
+server:
+  port: 8081
+
+---
+spring:
+  config:
+    activate:
+      on-profile: development
+  datasource:
+    url: jdbc:h2:mem:localDB
+    username: devUser
+    password: password
+  h2:
+    console:
+      enabled: true  # Enable H2 web console
+      path: /h2-console  # The URL path to access the console
