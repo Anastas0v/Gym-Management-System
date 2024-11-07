@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to ExerciseHub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(to right, #ff4b5c, #ff8c00); /* Energetic gradient */
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+        }
+
+        .navbar {
+            width: 100%;
+            background-color: transparent;
+            padding: 20px 0;
+        }
+
+        .navbar a {
+            color: #fff;
+            font-weight: 600;
+            font-size: 1.2em;
+            margin: 0 15px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .navbar a:hover {
+            color: #ff8c00;
+        }
+
+        .hero-section {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .hero-section h1 {
+            font-size: 3em;
+            font-weight: 700;
+            color: #ff8c00;
+            margin-bottom: 20px;
+        }
+
+        .hero-section p {
+            font-size: 1.5em;
+            font-weight: 400;
+            max-width: 600px;
+            margin: 0 auto;
+            margin-bottom: 40px;
+        }
+
+        .cta-button {
+            background-color: #ff4b5c;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1.1em;
+            font-weight: 600;
+            border-radius: 30px;
+            transition: background-color 0.3s ease;
+            text-decoration: none;
+        }
+
+        .cta-button:hover {
+            background-color: #ff8c00;
+        }
+
+        .footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            text-align: center;
+            padding: 10px;
+            color: #fff;
+        }
+
+        .footer p {
+            font-size: 1.1em;
+        }
+
+        .feature-cards {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .feature-card {
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 30px;
+            border-radius: 10px;
+            width: 250px;
+            text-align: center;
+            color: white;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-card h3 {
+            font-size: 1.8em;
+            margin-bottom: 20px;
+        }
+
+        .feature-card p {
+            font-size: 1.1em;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg">
+    <div class="container">
+        <a class="navbar-brand" href="#" style="font-size: 2em; font-weight: 700; color: #ff8c00;">ExerciseHub</a>
+        <div class="collapse navbar-collapse">
+            <a href="/login" class="navbar-item">Sign In</a>
+            <a href="/register" class="navbar-item">Register</a>
+            <a href="/about" class="navbar-item">About Us</a>
+        </div>
+    </div>
+</nav>
+
+<!-- Hero Section -->
+<section class="hero-section">
+    <h1>Welcome to ExerciseHub</h1>
+    <p>Your personal fitness journey starts here. Discover exercises, track your progress, and stay motivated!</p>
+    <a href="/get-started" class="cta-button">Get Started</a>
+</section>
+
+<!-- Features Section -->
+<section class="feature-cards">
+    <div class="feature-card">
+        <h3>Workouts</h3>
+        <p>Explore a wide variety of gym exercises, from beginner to advanced routines!</p>
+    </div>
+    <div class="feature-card">
+        <h3>Track Progress</h3>
+        <p>Keep track of your workouts, sets, reps, and progress over time!</p>
+    </div>
+    <div class="feature-card">
+        <h3>Community</h3>
+        <p>Join our fitness community to stay motivated and share tips with others.</p>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+    <p>&copy; 2024 ExerciseHub. All rights reserved.</p>
+</footer>
+
+</body>
+</html>
