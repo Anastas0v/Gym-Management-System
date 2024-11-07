@@ -9,6 +9,6 @@ public class HomeController
     @GetMapping("/")
     public String homepage()
     {
-        return "Welcome to Gym";
+        return "Welcome to Gym asd";
     }
 }
