@@ -1,4 +1,4 @@
-package com.gymbuddy.api;
+package com.gymbuddy.web;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -9,6 +9,6 @@ public class HomeController
     @GetMapping("/")
     public String homepage()
     {
-        return "Welcome to Gym Buddy";
+        return "Welcome to Gym";
     }
 }
