@@ -54,4 +54,21 @@ public class Gym {
 
     @Column(name = "gym_capacity")
     private Integer gymCapacity;
+
+    public Gym(Long id, String gymName, String gymAddress, String gymCity, String gymState, Integer zipCode, Integer phoneNumber, String gymEmail, String gymWebsite, String gymDescription, String gymWorkingHours, Integer gymMembership, boolean isGym24, Integer gymCapacity) {
+        this.id = id;
+        this.gymName = gymName;
+        this.gymAddress = gymAddress;
+        this.gymCity = gymCity;
+        this.gymState = gymState;
+        this.zipCode = zipCode;
+        this.phoneNumber = phoneNumber;
+        this.gymEmail = gymEmail;
+        this.gymWebsite = gymWebsite;
+        this.gymDescription = gymDescription;
+        this.gymWorkingHours = gymWorkingHours;
+        this.gymMembership = gymMembership;
+        this.isGym24 = isGym24;
+        this.gymCapacity = gymCapacity;
+    }
 }
