@@ -14,5 +14,5 @@ public interface GymService
 
     Gym create(Long id, String name, String address, String city, String state, Integer zipCode, Integer phone, String email, String website, String description, String workingHours, Integer membership, boolean isGym24, Integer capacity);
 
-    void delete(Long id)
+    void delete(Long id);
 }

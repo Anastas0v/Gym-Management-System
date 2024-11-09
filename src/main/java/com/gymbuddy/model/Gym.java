@@ -71,4 +71,116 @@ public class Gym {
         this.isGym24 = isGym24;
         this.gymCapacity = gymCapacity;
     }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getGymName() {
+        return gymName;
+    }
+
+    public void setGymName(String gymName) {
+        this.gymName = gymName;
+    }
+
+    public String getGymAddress() {
+        return gymAddress;
+    }
+
+    public void setGymAddress(String gymAddress) {
+        this.gymAddress = gymAddress;
+    }
+
+    public String getGymCity() {
+        return gymCity;
+    }
+
+    public void setGymCity(String gymCity) {
+        this.gymCity = gymCity;
+    }
+
+    public String getGymState() {
+        return gymState;
+    }
+
+    public void setGymState(String gymState) {
+        this.gymState = gymState;
+    }
+
+    public Integer getZipCode() {
+        return zipCode;
+    }
+
+    public void setZipCode(Integer zipCode) {
+        this.zipCode = zipCode;
+    }
+
+    public Integer getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(Integer phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getGymEmail() {
+        return gymEmail;
+    }
+
+    public void setGymEmail(String gymEmail) {
+        this.gymEmail = gymEmail;
+    }
+
+    public String getGymWebsite() {
+        return gymWebsite;
+    }
+
+    public void setGymWebsite(String gymWebsite) {
+        this.gymWebsite = gymWebsite;
+    }
+
+    public String getGymDescription() {
+        return gymDescription;
+    }
+
+    public void setGymDescription(String gymDescription) {
+        this.gymDescription = gymDescription;
+    }
+
+    public String getGymWorkingHours() {
+        return gymWorkingHours;
+    }
+
+    public void setGymWorkingHours(String gymWorkingHours) {
+        this.gymWorkingHours = gymWorkingHours;
+    }
+
+    public Integer getGymMembership() {
+        return gymMembership;
+    }
+
+    public void setGymMembership(Integer gymMembership) {
+        this.gymMembership = gymMembership;
+    }
+
+    public boolean isGym24() {
+        return isGym24;
+    }
+
+    public void setGym24(boolean gym24) {
+        isGym24 = gym24;
+    }
+
+    public Integer getGymCapacity() {
+        return gymCapacity;
+    }
+
+    public void setGymCapacity(Integer gymCapacity) {
+        this.gymCapacity = gymCapacity;
+    }
 }
