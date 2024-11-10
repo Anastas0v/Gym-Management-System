@@ -7,8 +7,6 @@ import lombok.Setter;
 @Setter
 public class GymDTO
 {
-    private Long id;
-
     private String gymName;
 
     private String gymAddress;

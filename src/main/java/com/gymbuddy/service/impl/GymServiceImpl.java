@@ -1,94 +1,92 @@
 package com.gymbuddy.service.impl;
 
 import com.gymbuddy.model.Gym;
+import com.gymbuddy.model.dto.GymDTO;
 import com.gymbuddy.repository.GymRepository;
 import com.gymbuddy.service.GymService;
+import lombok.Getter;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
+@Getter
 public class GymServiceImpl implements GymService
 {
-    private final GymRepository gymRepository;
-
-    public GymServiceImpl(GymRepository gymRepository)
-    {
-        this.gymRepository = gymRepository;
-    }
+    @Autowired
+    private GymRepository gymRepository;
 
     @Override
     public List<Gym> findAll()
     {
-        List<Gym> allGyms = gymRepository.findAll();
-        return allGyms;
+        return getGymRepository().findAll();
     }
 
     @Override
     public Gym findById(Long id)
     {
-        Gym gym = gymRepository.findById(id).get();
-        return gym;
+        return getGymRepository().findById(id)
+                .orElseThrow(() -> new RuntimeException("Gym Not Found With ID: " + id));
     }
 
     @Override
-    public Gym create(Long id, String name, String address, String city, String state, Integer zipCode, Integer phone, String email, String website, String description, String workingHours, Integer membership, boolean isGym24, Integer capacity) {
-        if (id == null || name == null || name.isEmpty() || address == null || address.isEmpty() ||
-                city == null || city.isEmpty() || state == null || state.isEmpty() || zipCode == null ||
-                phone == null || email == null || email.isEmpty() || workingHours == null ||
-                workingHours.isEmpty() || membership == null || capacity == null) {
-            throw new IllegalArgumentException("All required fields must be provided.");
+    public Gym create(GymDTO gymDTO)
+    {
+        if (gymDTO == null)
+        {
+            throw new IllegalArgumentException("Required Object Is Null...Error!");
         }
 
-        Gym gym = new Gym(id, name, address, city, state, zipCode, phone, email, website, description, workingHours, membership, isGym24, capacity);
-        gymRepository.save(gym);
-        return gym;
+        Gym toSave = new Gym();
+        mapProperties(toSave, gymDTO);
+        return getGymRepository().save(toSave);
+    }
+
+    private void mapProperties(Gym toSave, GymDTO gymDTO)
+    {
+        toSave.setGymName(gymDTO.getGymName());
+        toSave.setGymAddress(gymDTO.getGymAddress());
+        toSave.setGymCity(gymDTO.getGymCity());
+        toSave.setGymState(gymDTO.getGymState());
+        toSave.setZipCode(gymDTO.getZipCode());
+        toSave.setGymDescription(gymDTO.getGymDescription());
+        toSave.setGymMembership(gymDTO.getGymMembership());
+        toSave.setGym24(gymDTO.isGym24());
+        toSave.setGymCapacity(gymDTO.getGymCapacity());
     }
 
     @Override
-    public Gym update(Long id, Gym gym) {
-        if (id == null || gym == null) {
-            throw new IllegalArgumentException("ID and Gym details must be provided.");
+    public Gym update(Gym gym)
+    {
+        if (gym == null || gym.getId() == null)
+        {
+            throw new IllegalArgumentException("Required Data Missing...Error!");
         }
 
-        Optional<Gym> existingGym = Optional.ofNullable(gymRepository.findById(id));
+        Gym existingGym = findById(gym.getId());
 
-        if (existingGym.isPresent()) {
-            Gym updatedGym = existingGym.get();
-
-            // Update fields
-            updatedGym.setName(gym.getName());
-            updatedGym.setAddress(gym.getAddress());
-            updatedGym.setCity(gym.getCity());
-            updatedGym.setState(gym.getState());
-            updatedGym.setZipCode(gym.getZipCode());
-            updatedGym.setPhone(gym.getPhone());
-            updatedGym.setEmail(gym.getEmail());
-            updatedGym.setWebsite(gym.getWebsite());
-            updatedGym.setDescription(gym.getDescription());
-            updatedGym.setWorkingHours(gym.getWorkingHours());
-            updatedGym.setMembership(gym.getMembership());
-            updatedGym.setIsGym24(gym.isGym24());
-            updatedGym.setCapacity(gym.getCapacity());
-
-            // Save and return the updated Gym object
-            return gymRepository.save(updatedGym);
+        if(existingGym != null)
+        {
+            BeanUtils.copyProperties(gym, existingGym);
+        }
+        else
+        {
+            throw new IllegalArgumentException("Required Object Is Null...Error!");
         }
 
-        return null;  // or throw an exception if not found
+        return getGymRepository().save(existingGym);
     }
 
 
     @Override
     public void delete(Long id)
     {
-        if(id == null)
+        if(findById(id) == null)
         {
             throw new IllegalArgumentException();
         }
-
-        gymRepository.deleteById(id);
+        getGymRepository().deleteById(id);
     }
-
 }
