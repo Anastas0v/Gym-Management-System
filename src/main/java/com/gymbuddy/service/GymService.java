@@ -1,6 +1,7 @@
 package com.gymbuddy.service;
 
 import com.gymbuddy.model.Gym;
+import com.gymbuddy.model.dto.GymDTO;
 
 import java.util.List;
 
@@ -10,9 +11,9 @@ public interface GymService
 
     Gym findById(Long id);
 
-    Gym update(Long id, Gym gym);
+    Gym update(Gym gym);
 
-    Gym create(Long id, String name, String address, String city, String state, Integer zipCode, Integer phone, String email, String website, String description, String workingHours, Integer membership, boolean isGym24, Integer capacity);
+    Gym create(GymDTO gymDTO);
 
     void delete(Long id);
 }
