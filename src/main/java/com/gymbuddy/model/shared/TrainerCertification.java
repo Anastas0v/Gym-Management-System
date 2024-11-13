@@ -1,12 +1,12 @@
-package com.gymbuddy.model;
+package com.gymbuddy.model.shared;
 
 import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.Date;
 
-@Entity(name = "trainer_certification")
 @Data
+@Entity(name = "trainer_certification")
 public class TrainerCertification
 {
     @Id

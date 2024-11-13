@@ -1,11 +1,11 @@
-package com.gymbuddy.model;
+package com.gymbuddy.model.shared;
 
 import com.gymbuddy.model.enumerations.ContactType;
 import jakarta.persistence.*;
 import lombok.Data;
 
-@Entity(name = "contact_details")
 @Data
+@Entity(name = "contact_details")
 public class ContactDetails
 {
     @Id

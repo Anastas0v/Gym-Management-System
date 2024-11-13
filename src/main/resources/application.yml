@@ -12,7 +12,17 @@ spring:
     username: devUser
     password: password
     driverClassName: org.h2.Driver
+  # Hibernate Configuration
+  jpa:
+    hibernate:
+      ddl-auto: update  # Automatically updates schema on startup
+    show-sql: true  # Optional: Shows the SQL queries in the console for debugging
+    properties:
+      hibernate:
+        format_sql: true  # Formats SQL for better readability
+
+  # H2 Console Configuration (Access H2 web console in the browser)
   h2:
     console:
-      enabled: true  # Enable H2 web console
-      path: /h2-console  # The URL path to access the console
+      enabled: true
+      path: /h2-console  # Path to access the H2 web console

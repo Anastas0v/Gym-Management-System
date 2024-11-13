@@ -1,12 +1,12 @@
 package com.gymbuddy.model;
 
-import com.gymbuddy.model.enumerations.WorkingHours;
+import com.gymbuddy.model.enumerations.WorkingShift;
 import jakarta.persistence.*;
 import lombok.Data;
 import java.util.List;
 
-@Entity(name = "trainer")
 @Data
+@Entity(name = "trainer")
 public class Trainer
 {
     @Id
@@ -20,23 +20,21 @@ public class Trainer
     @Column(name = "trainer_lastName", nullable = false)
     private String lastName;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "trainer_id")
-    private List<ContactDetails> contactDetails;
+    @Column(name = "contact_details_ids")
+    private List<Integer> contactDetailsIds;
 
     @Column(name = "trainer_experienceYears", nullable = false)
     private Integer experienceYears;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "trainer_id")
-    private List<TrainerCertification> certifications;
+    @Column(name = "certifications_ids")
+    private List<Long> certificationsIds;
 
     @Column(name = "trainer_hourlyRate", nullable = false)
     private Integer hourlyRate;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "trainer_shift", nullable = false)
-    private WorkingHours shift;
+    private WorkingShift shift;
 
     @Column(name = "trainer_biography")
     private String biography;

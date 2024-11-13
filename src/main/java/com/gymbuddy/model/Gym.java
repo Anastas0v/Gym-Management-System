@@ -5,6 +5,8 @@ import lombok.Data;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Data
 @Entity(name = "gym")
 public class Gym {
@@ -17,36 +19,17 @@ public class Gym {
     @Column(name = "gym_name")
     private String gymName;
 
-    @Column(name = "gym_address")
-    private String gymAddress;
+    @Column(name = "location_id")
+    private Long locationId;
 
-    @Column(name = "gym_city")
-    private String gymCity;
-
-    @Column(name = "gym_state")
-    private String gymState;
-
-    @Column(name = "zip_code")
-    private Integer zipCode;
-
-    //change
-    @Column(name = "phone_number")
-    private Integer phoneNumber;
-
-    //change
-    @Column(name = "gym_email")
-    private String gymEmail;
-
-    //change
-    @Column(name = "gym_website")
-    private String gymWebsite;
+    @Column(name = "contact_details_ids")
+    private List<Long> contactDetailsIds;
 
     @Column(name = "gym_description")
     private String gymDescription;
 
-    //change
-    @Column(name = "gym_working_hours")
-    private String gymWorkingHours;
+    @Column(name = "working_information_id")
+    private Long workingInformationId;
 
     @Column(name = "gym_membership")
     private Integer gymMembership;
