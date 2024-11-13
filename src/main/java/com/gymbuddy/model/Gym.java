@@ -9,8 +9,8 @@ import java.util.List;
 
 @Data
 @Entity(name = "gym")
-public class Gym {
-
+public class Gym
+{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "gym_id", nullable = false)
