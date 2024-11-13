@@ -7,14 +7,14 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity(name = "working_info")
-public class WorkingInfo {
-
+public class WorkingInfo
+{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "working_hours_id")
     private Long id;
 
-    @Column(name = "day")
+    @Column(name = "working_day")
     private String day;
 
     @Column(name = "opening_time")

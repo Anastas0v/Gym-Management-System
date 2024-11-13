@@ -14,7 +14,10 @@ import com.gymbuddy.repository.GymLocationRepository;
 import com.gymbuddy.repository.GymRepository;
 import com.gymbuddy.repository.WorkingInfoRepository;
 import com.gymbuddy.service.GymService;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.Getter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,6 +29,8 @@ import java.util.stream.Collectors;
 @Getter
 public class GymServiceImpl implements GymService
 {
+    private static final Logger logger = LoggerFactory.getLogger(GymServiceImpl.class);
+
     @Autowired
     private GymRepository gymRepository;
 
@@ -48,7 +53,7 @@ public class GymServiceImpl implements GymService
     public Gym findById(Long id)
     {
         return getGymRepository().findById(id)
-                .orElseThrow(() -> new RuntimeException("Gym Not Found With ID: " + id));
+                .orElseThrow(() -> new EntityNotFoundException("Gym not found with ID: " + id));
     }
 
     @Override
@@ -56,7 +61,7 @@ public class GymServiceImpl implements GymService
     {
         if (gymDTO == null)
         {
-            throw new IllegalArgumentException("Required Object Is Null...Error!");
+            throw new IllegalArgumentException("The provided object is null. Please check the input data.");
         }
 
         Gym toSave = new Gym();
@@ -86,8 +91,7 @@ public class GymServiceImpl implements GymService
         }
         catch (RuntimeException e)
         {
-            // add logger
-            e.printStackTrace();
+            logger.error("Error saving WorkingInfo", e);
         }
 
         return workingInfo.getId();
@@ -108,9 +112,18 @@ public class GymServiceImpl implements GymService
     {
         List<ContactDetails> contactDetailsList = contactDetailsDTO.stream()
                 .map(this::mapToContactDetails)
-                .toList();
+                .collect(Collectors.toList());
 
-        contactDetailsList.forEach(getContactDetailsRepository()::save);
+        contactDetailsList.forEach(contactDetails -> {
+            try
+            {
+                contactDetailsRepository.save(contactDetails);
+            }
+            catch (RuntimeException e)
+            {
+                logger.error("Error saving ContactDetails", e);
+            }
+        });
 
         return contactDetailsList.stream()
                 .map(ContactDetails::getId)
@@ -137,8 +150,7 @@ public class GymServiceImpl implements GymService
         }
         catch (RuntimeException e)
         {
-            // add logger
-            e.printStackTrace();
+            logger.error("Error saving GymLocation", e);
         }
 
         return location.getId();
@@ -161,23 +173,22 @@ public class GymServiceImpl implements GymService
     {
         if (gym == null || gym.getId() == null)
         {
-            throw new IllegalArgumentException("Required Data Missing...Error!");
+            throw new IllegalArgumentException("The provided gym object or ID is missing.");
         }
 
         Gym existingGym = findById(gym.getId());
 
-        if(existingGym != null)
+        if (existingGym != null)
         {
             BeanUtils.copyProperties(gym, existingGym);
         }
         else
         {
-            throw new IllegalArgumentException("Required Object Is Null...Error!");
+            throw new IllegalArgumentException("The gym with the given ID was not found.");
         }
 
         return getGymRepository().save(existingGym);
     }
-
 
     @Override
     public void delete(Long id)
