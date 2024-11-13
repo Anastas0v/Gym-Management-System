@@ -1,6 +1,6 @@
 package com.gymbuddy.model.enumerations;
 
-public enum WorkingHours
+public enum WorkingShift
 {
     MORNING,     // For morning shifts
     AFTERNOON,   // For afternoon shifts

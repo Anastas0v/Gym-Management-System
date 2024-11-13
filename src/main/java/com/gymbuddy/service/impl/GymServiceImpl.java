@@ -1,7 +1,14 @@
 package com.gymbuddy.service.impl;
 
 import com.gymbuddy.model.Gym;
+import com.gymbuddy.model.dto.ContactDetailsDTO;
 import com.gymbuddy.model.dto.GymDTO;
+import com.gymbuddy.model.dto.GymLocationDTO;
+import com.gymbuddy.model.dto.WorkingInfoDTO;
+import com.gymbuddy.model.enumerations.ContactType;
+import com.gymbuddy.model.shared.ContactDetails;
+import com.gymbuddy.model.shared.GymLocation;
+import com.gymbuddy.model.shared.WorkingInfo;
 import com.gymbuddy.repository.GymRepository;
 import com.gymbuddy.service.GymService;
 import lombok.Getter;
@@ -9,6 +16,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -47,14 +55,52 @@ public class GymServiceImpl implements GymService
     private void mapProperties(Gym toSave, GymDTO gymDTO)
     {
         toSave.setGymName(gymDTO.getGymName());
-        toSave.setGymAddress(gymDTO.getGymAddress());
-        toSave.setGymCity(gymDTO.getGymCity());
-        toSave.setGymState(gymDTO.getGymState());
-        toSave.setZipCode(gymDTO.getZipCode());
+        toSave.setLocation(buildGymLocation(gymDTO.getLocationDTO()));
+        toSave.setContactDetails(buildGymContactDetails(gymDTO.getContactDetailsDTO()));
         toSave.setGymDescription(gymDTO.getGymDescription());
+        toSave.setWorkingInformation(buildGymWorkingInfo(gymDTO.getWorkingInfoDTO()));
         toSave.setGymMembership(gymDTO.getGymMembership());
         toSave.setGym24(gymDTO.isGym24());
         toSave.setGymCapacity(gymDTO.getGymCapacity());
+    }
+
+    private WorkingInfo buildGymWorkingInfo(WorkingInfoDTO workingInfoDTO)
+    {
+        WorkingInfo workingInfo = new WorkingInfo();
+
+        workingInfo.setClosingTime(workingInfoDTO.getClosingTime());
+        workingInfo.setOpeningTime(workingInfoDTO.getOpeningTime());
+        workingInfo.setDay(workingInfo.getDay());
+
+        return workingInfo;
+    }
+
+    private List<ContactDetails> buildGymContactDetails(List<ContactDetailsDTO> contactDetailsDTO)
+    {
+        List<ContactDetails> contactDetailsList = new ArrayList<>();
+
+        for (ContactDetailsDTO contactDetails : contactDetailsDTO)
+        {
+            ContactDetails newContactDetails = new ContactDetails();
+            newContactDetails.setContact(contactDetails.getContact());
+            newContactDetails.setContactType(ContactType.valueOf(contactDetails.getContactType()));
+
+            contactDetailsList.add(newContactDetails);
+        }
+
+        return contactDetailsList;
+    }
+
+    private GymLocation buildGymLocation(GymLocationDTO locationDTO)
+    {
+        GymLocation location = new GymLocation();
+
+        location.setGymState(locationDTO.getGymState());
+        location.setGymAddress(locationDTO.getGymAddress());
+        location.setZipCode(locationDTO.getZipCode());
+        location.setGymCity(locationDTO.getGymCity());
+
+        return location;
     }
 
     @Override

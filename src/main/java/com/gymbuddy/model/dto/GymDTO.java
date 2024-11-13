@@ -3,29 +3,21 @@ package com.gymbuddy.model.dto;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 public class GymDTO
 {
     private String gymName;
 
-    private String gymAddress;
+    private GymLocationDTO locationDTO;
 
-    private String gymCity;
-
-    private String gymState;
-
-    private Integer zipCode;
-
-    private Integer phoneNumber;
-
-    private String gymEmail;
-
-    private String gymWebsite;
+    private List<ContactDetailsDTO> contactDetailsDTO;
 
     private String gymDescription;
 
-    private String gymWorkingHours;
+    private WorkingInfoDTO workingInfoDTO;
 
     private Integer gymMembership;
 

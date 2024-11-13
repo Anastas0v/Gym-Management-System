@@ -1,12 +1,14 @@
 package com.gymbuddy.model;
 
-import com.gymbuddy.model.enumerations.WorkingHours;
+import com.gymbuddy.model.enumerations.WorkingShift;
+import com.gymbuddy.model.shared.ContactDetails;
+import com.gymbuddy.model.shared.TrainerCertification;
 import jakarta.persistence.*;
 import lombok.Data;
 import java.util.List;
 
-@Entity(name = "trainer")
 @Data
+@Entity(name = "trainer")
 public class Trainer
 {
     @Id
@@ -36,7 +38,7 @@ public class Trainer
 
     @Enumerated(EnumType.STRING)
     @Column(name = "trainer_shift", nullable = false)
-    private WorkingHours shift;
+    private WorkingShift shift;
 
     @Column(name = "trainer_biography")
     private String biography;

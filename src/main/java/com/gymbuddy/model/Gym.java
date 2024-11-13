@@ -1,9 +1,14 @@
 package com.gymbuddy.model;
 
+import com.gymbuddy.model.shared.ContactDetails;
+import com.gymbuddy.model.shared.GymLocation;
+import com.gymbuddy.model.shared.WorkingInfo;
 import jakarta.persistence.Entity;
 import lombok.Data;
 
 import jakarta.persistence.*;
+
+import java.util.List;
 
 @Data
 @Entity(name = "gym")
@@ -17,36 +22,21 @@ public class Gym {
     @Column(name = "gym_name")
     private String gymName;
 
-    @Column(name = "gym_address")
-    private String gymAddress;
+    //temporary solution. after final definition of entity properties, will remove the database relations
+    //for better performance
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "location_id", referencedColumnName = "gym_location_id")
+    private GymLocation location;
 
-    @Column(name = "gym_city")
-    private String gymCity;
-
-    @Column(name = "gym_state")
-    private String gymState;
-
-    @Column(name = "zip_code")
-    private Integer zipCode;
-
-    //change
-    @Column(name = "phone_number")
-    private Integer phoneNumber;
-
-    //change
-    @Column(name = "gym_email")
-    private String gymEmail;
-
-    //change
-    @Column(name = "gym_website")
-    private String gymWebsite;
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "gym_id")
+    private List<ContactDetails> contactDetails;
 
     @Column(name = "gym_description")
     private String gymDescription;
 
-    //change
-    @Column(name = "gym_working_hours")
-    private String gymWorkingHours;
+    @OneToOne(cascade = CascadeType.ALL)
+    private WorkingInfo workingInformation;
 
     @Column(name = "gym_membership")
     private Integer gymMembership;
