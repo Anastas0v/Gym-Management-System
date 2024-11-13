@@ -9,15 +9,18 @@ import com.gymbuddy.model.enumerations.ContactType;
 import com.gymbuddy.model.shared.ContactDetails;
 import com.gymbuddy.model.shared.GymLocation;
 import com.gymbuddy.model.shared.WorkingInfo;
+import com.gymbuddy.repository.ContactDetailsRepository;
+import com.gymbuddy.repository.GymLocationRepository;
 import com.gymbuddy.repository.GymRepository;
+import com.gymbuddy.repository.WorkingInfoRepository;
 import com.gymbuddy.service.GymService;
 import lombok.Getter;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Getter
@@ -25,6 +28,15 @@ public class GymServiceImpl implements GymService
 {
     @Autowired
     private GymRepository gymRepository;
+
+    @Autowired
+    private GymLocationRepository gymLocationRepository;
+
+    @Autowired
+    private ContactDetailsRepository contactDetailsRepository;
+
+    @Autowired
+    private WorkingInfoRepository workingInfoRepository;
 
     @Override
     public List<Gym> findAll()
@@ -55,16 +67,33 @@ public class GymServiceImpl implements GymService
     private void mapProperties(Gym toSave, GymDTO gymDTO)
     {
         toSave.setGymName(gymDTO.getGymName());
-        toSave.setLocation(buildGymLocation(gymDTO.getLocationDTO()));
-        toSave.setContactDetails(buildGymContactDetails(gymDTO.getContactDetailsDTO()));
+        toSave.setLocationId(saveAndRetrieveGymLocationId(gymDTO.getLocationDTO()));
+        toSave.setContactDetailsIds(saveAndRetrieveContactDetailsIds(gymDTO.getContactDetailsDTO()));
         toSave.setGymDescription(gymDTO.getGymDescription());
-        toSave.setWorkingInformation(buildGymWorkingInfo(gymDTO.getWorkingInfoDTO()));
+        toSave.setWorkingInformationId(saveAndRetrieveWorkingInfoId(gymDTO.getWorkingInfoDTO()));
         toSave.setGymMembership(gymDTO.getGymMembership());
         toSave.setGym24(gymDTO.isGym24());
         toSave.setGymCapacity(gymDTO.getGymCapacity());
     }
 
-    private WorkingInfo buildGymWorkingInfo(WorkingInfoDTO workingInfoDTO)
+    private Long saveAndRetrieveWorkingInfoId(WorkingInfoDTO workingInfoDTO)
+    {
+        WorkingInfo workingInfo = mapToWorkingInfo(workingInfoDTO);
+
+        try
+        {
+            workingInfo = getWorkingInfoRepository().save(workingInfo);
+        }
+        catch (RuntimeException e)
+        {
+            // add logger
+            e.printStackTrace();
+        }
+
+        return workingInfo.getId();
+    }
+
+    private WorkingInfo mapToWorkingInfo(WorkingInfoDTO workingInfoDTO)
     {
         WorkingInfo workingInfo = new WorkingInfo();
 
@@ -75,23 +104,47 @@ public class GymServiceImpl implements GymService
         return workingInfo;
     }
 
-    private List<ContactDetails> buildGymContactDetails(List<ContactDetailsDTO> contactDetailsDTO)
+    private List<Long> saveAndRetrieveContactDetailsIds(List<ContactDetailsDTO> contactDetailsDTO)
     {
-        List<ContactDetails> contactDetailsList = new ArrayList<>();
+        List<ContactDetails> contactDetailsList = contactDetailsDTO.stream()
+                .map(this::mapToContactDetails)
+                .toList();
 
-        for (ContactDetailsDTO contactDetails : contactDetailsDTO)
-        {
-            ContactDetails newContactDetails = new ContactDetails();
-            newContactDetails.setContact(contactDetails.getContact());
-            newContactDetails.setContactType(ContactType.valueOf(contactDetails.getContactType()));
+        contactDetailsList.forEach(getContactDetailsRepository()::save);
 
-            contactDetailsList.add(newContactDetails);
-        }
-
-        return contactDetailsList;
+        return contactDetailsList.stream()
+                .map(ContactDetails::getId)
+                .collect(Collectors.toList());
     }
 
-    private GymLocation buildGymLocation(GymLocationDTO locationDTO)
+    private ContactDetails mapToContactDetails(ContactDetailsDTO contactDetailsDTO)
+    {
+        ContactDetails contactDetails = new ContactDetails();
+
+        contactDetails.setContact(contactDetailsDTO.getContact());
+        contactDetails.setContactType(ContactType.valueOf(contactDetailsDTO.getContactType()));
+
+        return contactDetails;
+    }
+
+    private Long saveAndRetrieveGymLocationId(GymLocationDTO locationDTO)
+    {
+        GymLocation location = mapToGymLocation(locationDTO);
+
+        try
+        {
+            location = getGymLocationRepository().save(location);
+        }
+        catch (RuntimeException e)
+        {
+            // add logger
+            e.printStackTrace();
+        }
+
+        return location.getId();
+    }
+
+    private GymLocation mapToGymLocation(GymLocationDTO locationDTO)
     {
         GymLocation location = new GymLocation();
 
