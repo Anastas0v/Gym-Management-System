@@ -5,6 +5,7 @@ import lombok.Data;
 
 import jakarta.persistence.*;
 
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -22,6 +23,7 @@ public class Gym
     @Column(name = "location_id")
     private Long locationId;
 
+    @ElementCollection
     @Column(name = "contact_details_ids")
     private List<Long> contactDetailsIds;
 
@@ -39,4 +41,22 @@ public class Gym
 
     @Column(name = "gym_capacity")
     private Integer gymCapacity;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date created;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date modified;
+
+    @PrePersist
+    protected void onCreate()
+    {
+        created = new Date();
+    }
+
+    @PreUpdate
+    protected void onUpdate()
+    {
+        modified = new Date();
+    }
 }
