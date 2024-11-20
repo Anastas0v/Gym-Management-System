@@ -8,21 +8,17 @@ spring:
     activate:
       on-profile: development
   datasource:
-    url: jdbc:h2:mem:localDB
-    username: devUser
-    password: password
-    driverClassName: org.h2.Driver
-  # Hibernate Configuration
+    url: jdbc:mysql://localhost:3306/gym-management-systemdb
+    username: root
+    password: Admin123!
+    driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
       ddl-auto: update  # Automatically updates schema on startup
-    show-sql: true  # Optional: Shows the SQL queries in the console for debugging
+    show-sql: true      # Optional: Shows SQL queries in the console
     properties:
       hibernate:
         format_sql: true  # Formats SQL for better readability
-
-  # H2 Console Configuration (Access H2 web console in the browser)
-  h2:
-    console:
-      enabled: true
-      path: /h2-console  # Path to access the H2 web console
+  logging:
+    level:
+      org.hibernate.SQL: DEBUG # Enables SQL logs for debugging
