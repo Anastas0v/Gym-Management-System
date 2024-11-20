@@ -25,8 +25,7 @@ public class TrainerCertification
 
     @Column(name = "certification_name", nullable = false)
     private String certificationName;
-
-    //if certification is below validUntil date it is valid
+    
     @Column(name = "certification_isValid", nullable = false)
     private boolean isValid;
 }

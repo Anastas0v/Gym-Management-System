@@ -16,6 +16,4 @@ public class TrainerCertificationDTO
     private String issuedFrom;
 
     private String certificationName;
-
-    private boolean isValid;
 }
