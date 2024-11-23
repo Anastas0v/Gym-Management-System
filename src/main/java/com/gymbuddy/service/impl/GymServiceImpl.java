@@ -22,6 +22,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -135,7 +136,13 @@ public class GymServiceImpl implements GymService
         ContactDetails contactDetails = new ContactDetails();
 
         contactDetails.setContact(contactDetailsDTO.getContact());
-        contactDetails.setContactType(ContactType.valueOf(contactDetailsDTO.getContactType()));
+        contactDetails.setContactType(
+                Arrays.stream(ContactType.values())
+                        .filter(ct -> ct.name().equalsIgnoreCase(contactDetailsDTO.getContactType()))
+                        .findFirst()
+                        .orElseThrow(() -> new IllegalArgumentException("Invalid ContactType: " + contactDetailsDTO.getContactType()))
+        );
+
 
         return contactDetails;
     }

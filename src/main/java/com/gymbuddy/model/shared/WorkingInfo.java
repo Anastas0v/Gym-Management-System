@@ -14,10 +14,10 @@ public class WorkingInfo
     @Column(name = "working_hours_id")
     private Long id;
 
-    @Column(name = "working_day")
+    @Column(name = "working_day", nullable = false)
     private String day;
 
-    @Column(name = "opening_time")
+    @Column(name = "opening_time", nullable = false)
     private String openingTime;
 
     @Column(name = "closing_time")

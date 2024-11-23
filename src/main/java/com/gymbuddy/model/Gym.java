@@ -17,23 +17,23 @@ public class Gym
     @Column(name = "gym_id", nullable = false)
     private Long id;
 
-    @Column(name = "gym_name")
+    @Column(name = "gym_name", nullable = false)
     private String gymName;
 
-    @Column(name = "location_id")
+    @Column(name = "location_id", nullable = false)
     private Long locationId;
 
     @ElementCollection
-    @Column(name = "contact_details_ids")
+    @Column(name = "contact_details_ids", nullable = false)
     private List<Long> contactDetailsIds;
 
     @Column(name = "gym_description")
     private String gymDescription;
 
-    @Column(name = "working_information_id")
+    @Column(name = "working_information_id", nullable = false)
     private Long workingInformationId;
 
-    @Column(name = "gym_membership")
+    @Column(name = "gym_membership", nullable = false)
     private Integer gymMembership;
 
     @Column(name = "is_gym_24")
