@@ -104,7 +104,7 @@ public class GymServiceImpl implements GymService
 
         workingInfo.setClosingTime(workingInfoDTO.getClosingTime());
         workingInfo.setOpeningTime(workingInfoDTO.getOpeningTime());
-        workingInfo.setDay(workingInfo.getDay());
+        workingInfo.setDay(workingInfoDTO.getDay());
 
         return workingInfo;
     }
