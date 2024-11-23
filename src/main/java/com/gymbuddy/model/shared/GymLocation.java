@@ -12,10 +12,10 @@ public class GymLocation
     @Column(name = "gym_location_id")
     private Long id;
 
-    @Column(name = "gym_address")
+    @Column(name = "gym_address", nullable = false)
     private String gymAddress;
 
-    @Column(name = "gym_city")
+    @Column(name = "gym_city", nullable = false)
     private String gymCity;
 
     @Column(name = "gym_state")
