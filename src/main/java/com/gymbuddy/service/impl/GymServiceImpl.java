@@ -57,8 +57,7 @@ public class GymServiceImpl implements GymService
             throw new IllegalArgumentException("The provided object is null. Please check the input data.");
         }
 
-        Gym toSave = mapProperties(gymDTO, logger, getContactDetailsRepository(), getGymLocationRepository(), getWorkingInfoRepository());
-        return getGymRepository().save(toSave);
+        return getGymRepository().save(mapProperties(gymDTO, logger, getContactDetailsRepository(), getGymLocationRepository(), getWorkingInfoRepository()));
     }
 
     @Override
@@ -84,6 +83,7 @@ public class GymServiceImpl implements GymService
         {
             throw new IllegalArgumentException();
         }
+
         getGymRepository().deleteById(id);
     }
 }

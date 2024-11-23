@@ -10,7 +10,6 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.Getter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -54,8 +53,7 @@ public class TrainerServiceImpl implements TrainerService
             throw new IllegalArgumentException("The provided object is null. Please check the input data.");
         }
 
-        Trainer toSave = mapProperties(trainerDTO, getContactDetailsRepository(), getTrainerCertificationRepository(), logger);
-        return getTrainerRepository().save(toSave);
+        return getTrainerRepository().save(mapProperties(trainerDTO, getContactDetailsRepository(), getTrainerCertificationRepository(), logger));
     }
 
     @Override
@@ -66,18 +64,12 @@ public class TrainerServiceImpl implements TrainerService
             throw new IllegalArgumentException("The provided trainer object or ID is missing.");
         }
 
-        Trainer existingTrainer = findById(trainer.getId());
-
-        if (existingTrainer != null)
+        if (!getTrainerRepository().existsById(trainer.getId()))
         {
-            BeanUtils.copyProperties(trainer, existingTrainer);
-        }
-        else
-        {
-            throw new IllegalArgumentException("Trainer with given ID was not found.");
+            throw new IllegalArgumentException("Trainer with the given ID was not found.");
         }
 
-        return getTrainerRepository().save(existingTrainer);
+        return getTrainerRepository().save(trainer);
     }
 
     @Override
@@ -87,6 +79,7 @@ public class TrainerServiceImpl implements TrainerService
         {
             throw new IllegalArgumentException();
         }
+
         getTrainerRepository().deleteById(id);
     }
 }
