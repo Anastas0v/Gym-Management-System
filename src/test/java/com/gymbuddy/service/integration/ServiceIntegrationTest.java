@@ -12,7 +12,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 
 import java.time.LocalDateTime;
 
-import static com.gymbuddy.service.integration.utils.DTOToClassMapper.mapGym;
+import static com.gymbuddy.service.integration.utils.GymDTOToClassMapper.mapGym;
 import static com.gymbuddy.service.integration.utils.DateUtils.truncateToMinutes;
 
 @SpringBootTest
@@ -44,6 +44,5 @@ public class ServiceIntegrationTest
 
         // Assertion
         Assertions.assertThrows(DataIntegrityViolationException.class, () -> gymService.create(gymDTO));
-
     }
 }

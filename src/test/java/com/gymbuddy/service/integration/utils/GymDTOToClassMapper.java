@@ -8,7 +8,7 @@ import com.gymbuddy.model.dto.WorkingInfoDTO;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DTOToClassMapper
+public class GymDTOToClassMapper
 {
     public static GymDTO mapGym()
     {
