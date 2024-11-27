@@ -55,7 +55,7 @@ public class GymAPIController
     @DeleteMapping("/{id}")
     public ResponseEntity<ApiResponse<Void>> deleteGym(@PathVariable Long id)
     {
-        gymService.delete(id);
+        getGymService().delete(id);
         ApiResponse<Void> response = new ApiResponse<>(null, HttpStatus.OK.value(), true);
         return ResponseEntity.ok(response);
     }
