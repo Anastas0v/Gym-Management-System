@@ -20,7 +20,7 @@ import static com.gymbuddy.service.integration.utils.DateUtils.truncateToMinutes
 
 @SpringBootTest
 @Transactional
-public class ServiceIntegrationTest
+public class GymServiceIntegrationTest
 {
     @Autowired
     private GymService gymService;
