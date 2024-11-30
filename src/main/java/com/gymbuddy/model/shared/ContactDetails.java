@@ -17,7 +17,6 @@ public class ContactDetails
     @Column(name = "contact_type", nullable = false)
     private ContactType contactType;
 
-    //if is phone number it will require regex validation, email and social media also
     @Column(name = "contact_information", nullable = false)
     private String contact;
 }

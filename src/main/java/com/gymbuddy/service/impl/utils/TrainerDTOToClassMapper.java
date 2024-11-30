@@ -14,6 +14,7 @@ import org.slf4j.Logger;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.function.Consumer;
@@ -40,7 +41,7 @@ public class TrainerDTOToClassMapper
                 TrainerDTOToClassMapper::mapToTrainerCertification,
                 trainerCertificationRepository::save));
         toSave.setHourlyRate(trainerDTO.getHourlyRate());
-        toSave.setShift(WorkingShift.valueOf(trainerDTO.getShift()));
+        toSave.setShift(WorkingShift.valueOf(trainerDTO.getShift().toUpperCase()));
         toSave.setBiography(trainerDTO.getBiography());
 
         return toSave;
@@ -100,7 +101,12 @@ public class TrainerDTOToClassMapper
         ContactDetails contactDetails = new ContactDetails();
 
         contactDetails.setContact(contactDetailsDTO.getContact());
-        contactDetails.setContactType(ContactType.valueOf(contactDetailsDTO.getContactType()));
+        contactDetails.setContactType(
+                Arrays.stream(ContactType.values())
+                        .filter(ct -> ct.name().equalsIgnoreCase(contactDetailsDTO.getContactType()))
+                        .findFirst()
+                        .orElseThrow(() -> new IllegalArgumentException("Invalid ContactType: " + contactDetailsDTO.getContactType()))
+        );
 
         return contactDetails;
     }
