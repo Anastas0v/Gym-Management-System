@@ -1,15 +1,26 @@
 package com.gymbuddy.web.api.response;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
-@AllArgsConstructor
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 public class ApiResponse<T>
 {
-    private T data;
-    private int statusCode;
     private boolean success;
+    private int statusCode;
+    private T data;
+    private ErrorDetails errorDetails;
+    private String timestamp;
+
+    public ApiResponse(boolean success, int statusCode, T data, ErrorDetails errorDetails)
+    {
+        this.success = success;
+        this.statusCode = statusCode;
+        this.data = data;
+        this.errorDetails = errorDetails;
+        this.timestamp = LocalDateTime.now().toString();
+    }
 }

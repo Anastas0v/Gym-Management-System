@@ -20,7 +20,7 @@ public class TrainerAPIController
     @Autowired
     private TrainerService trainerService;
 
-    @GetMapping("/{id}")
+/*    @GetMapping("/{id}")
     public ResponseEntity<ApiResponse<Trainer>> getTrainer(@PathVariable Long id)
     {
         Trainer trainer = getTrainerService().findById(id);
@@ -58,5 +58,5 @@ public class TrainerAPIController
         getTrainerService().delete(id);
         ApiResponse<Void> response = new ApiResponse<>(null, HttpStatus.OK.value(), true);
         return ResponseEntity.ok(response);
-    }
+    }*/
 }
