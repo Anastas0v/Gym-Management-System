@@ -15,10 +15,10 @@ public class GymDTOToClassMapper
         GymDTO dto = new GymDTO();
 
         dto.setGymName("TestGym");
-        dto.setLocationDTO(buildLocationDTO());
-        dto.setContactDetailsDTO(buildContactList());
+        dto.setLocationDTO(createLocationDTO());
+        dto.setContactDetailsDTO(createContactList());
         dto.setGymDescription("GymDescription");
-        dto.setWorkingInfoDTO(buildWorkingInfo());
+        dto.setWorkingInfoDTO(createWorkingInfo());
         dto.setGymMembership(1000);
         dto.setGym24(true);
         dto.setGymCapacity(10);
@@ -26,7 +26,7 @@ public class GymDTOToClassMapper
         return dto;
     }
 
-    public static WorkingInfoDTO buildWorkingInfo()
+    public static WorkingInfoDTO createWorkingInfo()
     {
         WorkingInfoDTO workingInfoDTO = new WorkingInfoDTO();
 
@@ -37,7 +37,7 @@ public class GymDTOToClassMapper
         return workingInfoDTO;
     }
 
-    public static List<ContactDetailsDTO> buildContactList()
+    public static List<ContactDetailsDTO> createContactList()
     {
         List<ContactDetailsDTO> contactDetailsDTOList = new ArrayList<>();
 
@@ -50,7 +50,7 @@ public class GymDTOToClassMapper
         return contactDetailsDTOList;
     }
 
-    public static GymLocationDTO buildLocationDTO()
+    public static GymLocationDTO createLocationDTO()
     {
         GymLocationDTO gymLocationDTO = new GymLocationDTO();
 

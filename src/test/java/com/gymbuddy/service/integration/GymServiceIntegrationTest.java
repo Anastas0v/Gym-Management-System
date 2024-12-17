@@ -37,7 +37,7 @@ public class GymServiceIntegrationTest
     }
 
     @Test
-    public void createAndSaveGym_SUCCESS()
+    public void createAndSaveGym_Success()
     {
         GymDTO gymDTO = mapGym();
         Gym gym = gymService.create(gymDTO);
@@ -50,7 +50,7 @@ public class GymServiceIntegrationTest
     }
 
     @Test
-    public void createAndSaveGym_FAIL()
+    public void createAndSaveGym_Fail()
     {
         GymDTO gymDTO = mapGym();
         gymDTO.setGymName(null);
