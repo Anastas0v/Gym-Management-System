@@ -43,6 +43,7 @@ public class TrainerDTOToClassMapper
         toSave.setHourlyRate(trainerDTO.getHourlyRate());
         toSave.setShift(WorkingShift.valueOf(trainerDTO.getShift().toUpperCase()));
         toSave.setBiography(trainerDTO.getBiography());
+        toSave.setImagePath(trainerDTO.getImagePath());
 
         return toSave;
     }
@@ -51,7 +52,7 @@ public class TrainerDTOToClassMapper
     {
         List<T> entityList = dtoList.stream()
                 .map(mapper)
-                .collect(Collectors.toList());
+                .toList();
 
         entityList.forEach(entity -> {
             try
@@ -60,7 +61,7 @@ public class TrainerDTOToClassMapper
             }
             catch (RuntimeException e)
             {
-                logger.error("Error saving entity: " + entity.getClass().getSimpleName(), e);
+                logger.error("Error saving entity: {}", entity.getClass().getSimpleName(), e);
             }
         });
 

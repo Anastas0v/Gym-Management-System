@@ -43,6 +43,8 @@ public class Trainer
     @Column(name = "trainer_biography")
     private String biography;
 
+    private String imagePath;
+
     @Temporal(TemporalType.TIMESTAMP)
     private Date created;
 

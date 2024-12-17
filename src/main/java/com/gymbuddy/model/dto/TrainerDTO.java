@@ -24,4 +24,6 @@ public class TrainerDTO
     private String shift;
 
     private String biography;
+
+    private String imagePath;
 }
