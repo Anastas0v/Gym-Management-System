@@ -24,4 +24,6 @@ public class GymDTO
     private boolean isGym24;
 
     private Integer gymCapacity;
+
+    private String imagePath;
 }

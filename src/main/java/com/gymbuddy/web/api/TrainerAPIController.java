@@ -3,6 +3,7 @@ package com.gymbuddy.web.api;
 import com.gymbuddy.model.Trainer;
 import com.gymbuddy.model.dto.TrainerDTO;
 import com.gymbuddy.service.TrainerService;
+import com.gymbuddy.web.api.handler.ImageHandler;
 import com.gymbuddy.web.api.response.ApiResponse;
 import com.gymbuddy.web.api.response.ErrorDetails;
 import jakarta.persistence.EntityNotFoundException;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -21,6 +23,9 @@ public class TrainerAPIController
 {
     @Autowired
     private TrainerService trainerService;
+
+    @Autowired
+    private ImageHandler imageHandler;
 
     @GetMapping("/{id}")
     public ResponseEntity<ApiResponse<Trainer>> getTrainer(@PathVariable Long id)
@@ -57,12 +62,17 @@ public class TrainerAPIController
     }
 
     @PostMapping("/save")
-    public ResponseEntity<ApiResponse<Trainer>> createTrainer(@RequestBody TrainerDTO trainerDTO)
+    public ResponseEntity<ApiResponse<Trainer>> createTrainer(@RequestBody TrainerDTO trainerDTO, @RequestParam("file") MultipartFile file)
     {
         ApiResponse<Trainer> response;
         try
         {
+            String trainerName = String.format(trainerDTO.getFirstName() + " " + trainerDTO.getLastName());
+            String filePath = getImageHandler().handleFileUpload(file, trainerName);
+
+            trainerDTO.setImagePath(filePath);
             Trainer trainer = getTrainerService().create(trainerDTO);
+
             response = new ApiResponse<>(true, HttpStatus.CREATED.value(), trainer, null);
             return ResponseEntity.status(201).body(response);
         }
@@ -74,11 +84,15 @@ public class TrainerAPIController
     }
 
     @PostMapping("/update")
-    public ResponseEntity<ApiResponse<Trainer>> updateTrainer(@RequestBody Trainer trainer)
+    public ResponseEntity<ApiResponse<Trainer>> updateTrainer(@RequestBody Trainer trainer, @RequestParam("file") MultipartFile file)
     {
         ApiResponse<Trainer> response;
         try
         {
+            String trainerName = String.format(trainer.getFirstName() + " " + trainer.getLastName());
+            String filePath = getImageHandler().handleFileUpload(file, trainerName);
+
+            trainer.setImagePath(filePath);
             Trainer updatedTrainer = getTrainerService().update(trainer);
             response = new ApiResponse<>(true, HttpStatus.OK.value(), updatedTrainer, null);
             return ResponseEntity.status(HttpStatus.OK).body(response);

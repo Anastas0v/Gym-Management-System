@@ -3,6 +3,7 @@ package com.gymbuddy.web.api;
 import com.gymbuddy.model.Gym;
 import com.gymbuddy.model.dto.GymDTO;
 import com.gymbuddy.service.GymService;
+import com.gymbuddy.web.api.handler.ImageHandler;
 import com.gymbuddy.web.api.response.ApiResponse;
 import com.gymbuddy.web.api.response.ErrorDetails;
 import jakarta.persistence.EntityNotFoundException;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -21,6 +23,9 @@ public class GymAPIController
 {
     @Autowired
     private GymService gymService;
+
+    @Autowired
+    private ImageHandler imageHandler;
 
     @GetMapping("/{id}")
     public ResponseEntity<ApiResponse<Gym>> getGym(@PathVariable Long id)
@@ -57,12 +62,16 @@ public class GymAPIController
     }
 
     @PostMapping("/save")
-    public ResponseEntity<ApiResponse<Gym>> createGym(@RequestBody GymDTO gymDTO)
+    public ResponseEntity<ApiResponse<Gym>> createGym(@RequestBody GymDTO gymDTO, @RequestParam("file") MultipartFile file)
     {
         ApiResponse<Gym> response;
         try
         {
+            String filePath = getImageHandler().handleFileUpload(file, gymDTO.getGymName());
+
+            gymDTO.setImagePath(filePath);
             Gym gym = gymService.create(gymDTO);
+
             response = new ApiResponse<>(true, HttpStatus.CREATED.value(), gym, null);
             return ResponseEntity.status(201).body(response);
         }
@@ -74,12 +83,16 @@ public class GymAPIController
     }
 
     @PostMapping("/update")
-    public ResponseEntity<ApiResponse<Gym>> updateGym(@RequestBody Gym gym)
+    public ResponseEntity<ApiResponse<Gym>> updateGym(@RequestBody Gym gym, @RequestParam("file") MultipartFile file)
     {
         ApiResponse<Gym> response;
         try
         {
+            String filePath = getImageHandler().handleFileUpload(file, gym.getGymName());
+
+            gym.setImagePath(filePath);
             Gym updatedGym = gymService.update(gym);
+
             response = new ApiResponse<>(true, HttpStatus.OK.value(), updatedGym, null);
             return ResponseEntity.status(HttpStatus.OK).body(response);
         }

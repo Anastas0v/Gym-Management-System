@@ -42,6 +42,8 @@ public class Gym
     @Column(name = "gym_capacity")
     private Integer gymCapacity;
 
+    private String imagePath;
+
     @Temporal(TemporalType.TIMESTAMP)
     private Date created;
 

@@ -31,6 +31,7 @@ public class GymDTOToClassMapper
         toSave.setGymMembership(gymDTO.getGymMembership());
         toSave.setGym24(gymDTO.isGym24());
         toSave.setGymCapacity(gymDTO.getGymCapacity());
+        toSave.setImagePath(gymDTO.getImagePath());
 
         return toSave;
     }
@@ -66,7 +67,7 @@ public class GymDTOToClassMapper
     {
         List<ContactDetails> contactDetailsList = contactDetailsDTO.stream()
                 .map(GymDTOToClassMapper::mapToContactDetails)
-                .collect(Collectors.toList());
+                .toList();
 
         contactDetailsList.forEach(contactDetails -> {
             try
