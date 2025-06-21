@@ -82,6 +82,25 @@ public class GymAPIController
         }
     }
 
+    @PostMapping("/saveFile")
+    public ResponseEntity<ApiResponse<Gym>> createGymWithoutMultipart(@RequestBody GymDTO gymDTO)
+    {
+        ApiResponse<Gym> response;
+        try
+        {
+            gymDTO.setImagePath("");
+            Gym gym = gymService.create(gymDTO);
+
+            response = new ApiResponse<>(true, HttpStatus.CREATED.value(), gym, null);
+            return ResponseEntity.status(201).body(response);
+        }
+        catch (Exception e)
+        {
+            response = new ApiResponse<>(false, HttpStatus.BAD_REQUEST.value(), null, new ErrorDetails("Invalid Input", e.getMessage()));
+            return ResponseEntity.status(400).body(response);
+        }
+    }
+
     @PostMapping("/update")
     public ResponseEntity<ApiResponse<Gym>> updateGym(@RequestBody Gym gym, @RequestParam("file") MultipartFile file)
     {
