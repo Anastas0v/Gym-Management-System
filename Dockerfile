@@ -7,7 +7,7 @@ WORKDIR /app
 COPY target/gymbuddy-0.0.1-SNAPSHOT.jar app.jar
 
 # Expose port 8080 for the app
-EXPOSE 8080
+EXPOSE 8080 5005
 
 # Run the Spring Boot JAR
-ENTRYPOINT ["java", "-jar", "app.jar"]
+ENTRYPOINT ["java", "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005", "-jar", "app.jar"]
