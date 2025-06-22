@@ -14,7 +14,7 @@ services:
 
   app:
     build: .
-    container_name: gymbuddy-app
+    container_name: gms-app
     ports:
       - "8080:8080"  # Spring Boot app
       - "5005:5005"  # Remote debugger
