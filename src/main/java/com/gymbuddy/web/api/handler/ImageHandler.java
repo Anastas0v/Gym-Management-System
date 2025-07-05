@@ -11,7 +11,6 @@ import java.nio.file.Paths;
 @Component
 public class ImageHandler
 {
-    @Value("${upload.directory}")
     private String uploadDir;
 
     public String handleFileUpload(MultipartFile file, String entityName) throws IOException
